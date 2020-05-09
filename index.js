@@ -15,7 +15,7 @@ server.get('/', (req, res) => {
 server.post('/api/users', (req, res) => {
     const user = req.body
 
-    if(user.name === "" || user.bio === "") {
+    if (user.name === "" || user.bio === "") {
         res.status(400).json({errorMessage: "Please provide name and bio for the user."});
     } else {
         user.id = shortid.generate();
@@ -30,25 +30,36 @@ server.get('/api/users', (req, res) => {
     res.status(200).json(users);
 });
 
-// // GET /api/users/:id
-server.get('/api/user/:id', (req, res) => {
+// GET /api/users/:id
+server.get('/api/users/:id', (req, res) => {
     const { id } = req.params;
     
-    const foundid = users.find((user) => user.id === id);
+    const foundid = users.find(user => user.id === id);
 
     if (foundid) {
         res.status(200).json(foundid)
     } else {
-        res.status(404).json({messasge: "The user with the specified ID does not exist."})
+        res.status(404).json({ message: "The user with the specified ID does not exist." })
     }
 })
 
-// // DELETE /api/users/:id
+// DELETE /api/users/:id
 server.delete('api/users/:id', (req, res) => {
+    const { id } = req.params;
 
+    const foundid = users.find(user => user.id === id)
+
+    if (foundid) {
+        users = users.filter(user => user.id !== id);
+        res.status(200).json(foundid);
+    } else {
+        res.status(404).json({ message: "The user with the specified ID does not exist." });
+    }
 })
 
-// // PUT /api/users/:id
+// PUT /api/users/:id
+
+
 
 // PORT
 const PORT = 5000;
