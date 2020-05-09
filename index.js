@@ -32,12 +32,19 @@ server.get('/api/users', (req, res) => {
 
 // // GET /api/users/:id
 server.get('/api/user/:id', (req, res) => {
+    const { id } = req.params;
     
+    const foundid = users.find((user) => user.id === id);
+
+    if (foundid) {
+        res.status(200).json(foundid)
+    } else {
+        res.status(404).json({messasge: "The user with the specified ID does not exist."})
+    }
 })
 
 // // DELETE /api/users/:id
 server.delete('api/users/:id', (req, res) => {
-    const { id } = req.params;
 
 })
 
