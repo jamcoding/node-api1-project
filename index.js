@@ -1,6 +1,5 @@
 const express = require('express');
-
-// const shortid = require('shortid');
+const shortid = require('shortid');
 
 const server = express();
 
@@ -9,41 +8,40 @@ server.use(express.json());
 let users = [];
 
 server.get('/', (req, res) => {
-    res.send('API is working');
+    res.send('Server is working');
 });
 
-// PORT
+// POST /api/users
 server.post('/api/users', (req, res) => {
-    const user = req.body;
+    const user = req.body
 
-    if(!user.name || !user.bio) {
-        res.status(400).json({errorMessage: "Please provide name adn bio for the user."});
+    if(user.name === "" || user.bio === "") {
+        res.status(400).json({errorMessage: "Please provide name and bio for the user."});
     } else {
         user.id = shortid.generate();
 
         users.push(user);
         res.status(201).json(user);
     }
-   
 })
 
-// GET /api/users/
+// GET /api/users
 server.get('/api/users', (req, res) => {
-    if(!users) {
-        res.status(500).json({errorMessage: "The users information could not be retrieved."})
-    } else {
-        res.status(201).json(users)
-    }
+    res.status(200).json(users);
 });
 
-// GET /api/users/:id
+// // GET /api/users/:id
 server.get('/api/user/:id', (req, res) => {
     
 })
 
-// DELETE /api/users/:id
+// // DELETE /api/users/:id
+server.delete('api/users/:id', (req, res) => {
+    const { id } = req.params;
 
-// PUT /api/users/:id
+})
+
+// // PUT /api/users/:id
 
 // PORT
 const PORT = 5000;
