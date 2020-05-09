@@ -44,7 +44,7 @@ server.get('/api/users/:id', (req, res) => {
 })
 
 // DELETE /api/users/:id
-server.delete('api/users/:id', (req, res) => {
+server.delete('/api/users/:id', (req, res) => {
     const { id } = req.params;
 
     const foundid = users.find(user => user.id === id)
